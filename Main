@@ -1,0 +1,130 @@
+
+import java.util.*;
+
+public class Main {
+    public static void outPut(int money, int water,int milk,int beans,int cups){
+        System.out.println("The coffee machine has:");
+        System.out.println(water + " of water");
+        System.out.println(milk + " of milk");
+        System.out.println(beans + " of coffee beans");
+        System.out.println(cups + " of disposable cups");
+        System.out.println("$" + money + " of money");
+    }
+    static class Machine {
+        int money;
+        int water;
+        int milk;
+        int beans;
+        int cups;
+        public int getMoney() {
+            return money;
+        }
+        public int getWater() {
+            return water;
+        }
+        public int getMilk() {
+            return milk;
+        }
+        public int getBeans() {
+            return beans;
+        }
+        public int getCups() {
+            return cups;
+        }
+        public void setResource(int money,int water,int milk,int beans,int cups){
+            this.money = getMoney() + money;
+            this.water = getWater() - water;
+            this.milk = getMilk() - milk;
+            this.beans = getBeans() - beans;
+            this.cups = getCups() - cups;
+        }
+        public void getMenu() {
+            System.out.println("Write action(buy, fill, take, remaining, exit)");
+        }
+        public void resEn(){
+            System.out.println("I have enough resources, making you a coffee!");
+        }
+        public void resNot() {
+            System.out.println("Sorry, I have not enough resources");
+        }
+    }
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        Machine machine = new Machine();
+        machine.money = 550;
+        machine.milk = 540;
+        machine.beans = 120;
+        machine.cups = 9;
+        machine.water = 400;
+        String s ="";
+
+        while(s!="exit") {
+            machine.getMenu();
+            s = sc.next();
+            switch (s) {
+                case "buy":
+                    System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+                    String i = sc.next();
+                    switch (i) {
+                        case "1":
+                            if(machine.getWater()>=250 && machine.getBeans() >=16 && machine.getCups()>=1){
+                                machine.setResource(4,250, 0, 16, 1);
+                                machine.resEn();
+                            } else {
+                                machine.resNot();
+                            }
+                            System.out.println();
+                            break;
+                        case "2":
+                            if(machine.getWater()>=350 && machine.getMilk()>=75 && machine.getBeans()>=20 && machine.getCups()>=1){
+                                machine.setResource(7,350,75,20,1);
+                                machine.resEn();
+                            }
+                            else {
+                                machine.resNot();
+                            }
+                            System.out.println();
+                            break;
+                        case "3":
+                            if(machine.getWater()>=200 && machine.getMilk()>=100 && machine.getBeans()>=12 && machine.getCups() >=1){
+                                machine.setResource(6,200,100,12,1);
+                                machine.resEn();
+                            }
+                            else {
+                                machine.resNot();
+                            }
+                            System.out.println();
+                            break;
+
+                        case "back": break;
+
+                    }
+                    break;
+                case "fill":
+                    System.out.println("Write how many ml of water do you want to add:");
+                    machine.water += sc.nextInt();
+                    System.out.println("Write how many ml of milk do you want to add:");
+                    machine.milk += sc.nextInt();
+                    System.out.println("Write how many grams of coffee beans do you want add:");
+                    machine.beans += sc.nextInt();
+                    System.out.println("Write how many cups of coffee do you want to add:");
+                    machine.cups += sc.nextInt();
+                    System.out.println();
+                    break;
+                case "take":
+                    System.out.println("I gave you $" + machine.money);
+                    machine.money = 0;
+                    System.out.println();
+                    break;
+                case "remaining":
+                    outPut(machine.money, machine.water, machine.milk, machine.beans, machine.cups);
+                    System.out.println();
+                    break;
+                case "exit":
+                    System.exit(0);
+            }
+        }
+        System.out.println();
+    }
+}
